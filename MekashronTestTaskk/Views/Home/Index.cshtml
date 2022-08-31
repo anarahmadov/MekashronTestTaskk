@@ -1,5 +1,8 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿@model LoginFormViewModel
+@{
+    ViewData["Title"] = "Login Page";
+    var statusCode = Context.Response.StatusCode;
+    UserEntityResponse userEntity = ViewBag.ResponseEntity;
 }
 
 <div class="text-center">
@@ -7,19 +10,61 @@
     <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
 </div>
 
-<form id="loginForm" class="form" method="POST">
+@if (statusCode == StatusCodes.Status200OK)
+{
+    <div class="bg-green">
+        <h4>Success</h4>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Username</th>
+                    <th>FirstName</th>
+                    <th>LastName</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        @userEntity?.EntityId
+                    </td>
+                    <td>
+                        @userEntity?.Email
+                    </td>
+                    <td>
+                        @userEntity?.FirstName
+                    </td>
+                    <td>
+                        @userEntity?.LastName
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="bg-green">
+        <h4>Success</h4>
+    </div>
+}
+else
+{
+    <div class="bg-red">
+        <h4 class="h4">Error</h4>
+    </div>
+}
+
+<form id="loginForm" class="form" method="POST" asp-action="Login" asp-controller="Home">
 
     <div class="form-group">
-        <label class="form-label">Username</label>
-        <input id="userNameInput" type="text" class="form-control" />
+        <label asp-for="UserName" class="form-label">Username</label>
+        <input asp-for="UserName" type="text" class="form-control" />
     </div>
 
     <div class="form-group">
-        <label class="form-label">Password</label>
-        <input id="passwordInput" type="password" class="form-control" />
+        <label asp-for="Password" class="form-label">Password</label>
+        <input asp-for="Password" type="password" class="form-control" />
     </div>
 
-    <button id="submitBtn" type="button" class="form-control">Submit</button>
+    <button id="submitBtn" type="submit" class="form-control">Submit</button>
 </form>
 
 <script type="text/javascript" src="~/js/customScripts/login.js"></script>

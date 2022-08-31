@@ -5,12 +5,8 @@
 
 function login() {
 
-    document.getElementById("submitBtn").addEventListener("click", function () {
+    document.getElementById("loginForm").addEventListener("submit", function () {
 
-        var userName = document.getElementById("userNameInput").value;
-        var password = document.getElementById("passwordInput").value;
-
-        sendLoginAjax(userName, password);
     });
 };
 
@@ -24,7 +20,7 @@ function sendLoginAjax(userName, password) {
     formData.append("func", "Login");
     formData.append("params", params);
 
-    fetch("http://isapi.mekashron.com/soapclient/soapclient.php?URL=http://isapi.icu-tech.com/icutech-test.dll%2Fwsdl%2FIICUTech", {
+    fetch("https://isapi.mekashron.com/soapclient/soapclient.php?URL=http://isapi.icu-tech.com/icutech-test.dll%2Fwsdl%2FIICUTech", {
         method: 'POST',
         body: formData
     }).then(result => result.json()).then(

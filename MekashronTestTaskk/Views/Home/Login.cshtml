@@ -1,0 +1,71 @@
+﻿@model LoginFormViewModel
+@{
+    ViewData["Title"] = "Login Page";
+    var isSucceed = ViewBag.IsSucceed;
+    UserEntityResponse userEntity = ViewBag.ResponseEntity;
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+</div>
+
+@if (isSucceed is not null)
+{
+    @if (isSucceed)
+    {
+        <div>
+            <span class="h4 text-success">Success</span>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Username</th>
+                        <th>FirstName</th>
+                        <th>LastName</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            @userEntity?.EntityId
+                        </td>
+                        <td>
+                            @userEntity?.Email
+                        </td>
+                        <td>
+                            @userEntity?.FirstName
+                        </td>
+                        <td>
+                            @userEntity?.LastName
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    }
+    else
+    {
+        <div class="bg-danger">
+            <h4 class="h4">Error</h4>
+        </div>
+    }
+}
+
+<form id="loginForm" class="form" method="POST" asp-action="Login" asp-controller="Home">
+
+    <div class="form-group">
+        <label asp-for="UserName" class="form-label">Username</label>
+        <input asp-for="UserName" type="text" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Password" class="form-label">Password</label>
+        <input asp-for="Password" type="password" class="form-control" />
+    </div>
+
+    <button id="submitBtn" type="submit" class="form-control">Submit</button>
+</form>
+
+<script type="text/javascript" src="~/js/customScripts/login.js"></script>
+
